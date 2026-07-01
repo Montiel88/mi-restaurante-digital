@@ -1,0 +1,8 @@
+﻿*.rar
+*.zip
+*.log
+*.tmp
+*.swp
+.vscode/
+.idea/
+sessions/
