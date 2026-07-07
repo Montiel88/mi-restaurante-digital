@@ -48,7 +48,7 @@ body::before {
         0 0 20px #FF9800,
         0 0 35px #FF9800,
         0 0 40px rgba(255, 152, 0, 0.5);
-    animation: neonPulse 2.5s ease-in-out infinite alternate;
+    animation: neonBlink 4s ease-in-out infinite;
     transition: all 0.3s ease;
 }
 .neon-text:hover {
@@ -61,8 +61,8 @@ body::before {
         0 0 80px rgba(255, 152, 0, 0.7);
     transform: scale(1.05);
 }
-@keyframes neonPulse {
-    from {
+@keyframes neonBlink {
+    0%, 100% {
         text-shadow:
             0 0 5px #FFC107,
             0 0 10px #FFC107,
@@ -71,14 +71,13 @@ body::before {
             0 0 35px #FF9800,
             0 0 40px rgba(255, 152, 0, 0.5);
     }
-    to {
+    50% {
         text-shadow:
-            0 0 8px #FFC107,
-            0 0 15px #FFC107,
-            0 0 25px #FF9800,
-            0 0 35px #FF9800,
-            0 0 50px #FF9800,
-            0 0 60px rgba(255, 152, 0, 0.7);
+            0 0 1px #FFC107,
+            0 0 2px #FFC107,
+            0 0 3px #FF9800,
+            0 0 4px #FF9800;
+        opacity: 0.6;
     }
 }
 
