@@ -1,21 +1,34 @@
 [
-    {"id":1,"categoria":"Hamburguesas","nombre":"Hamburguesa Sencilla","descripcion":"Hamburguesa clásica simple","precio":2.50,"imagen":"assets/images/hamburguesa-sencilla.png"},
-    {"id":2,"categoria":"Hamburguesas","nombre":"Combo Hamburguesa Sencilla","descripcion":"Hamburguesa + Papas + Gaseosa ¡Combo perfecto!","precio":3.25,"imagen":"assets/images/Gemini_Generated_Image_nl3zlcnl3zlcnl3z.png","promocion":true},
-    {"id":3,"categoria":"Hamburguesas","nombre":"Hamburguesa Doble","descripcion":"Doble carne para mayor satisfacción","precio":3.00,"imagen":"assets/images/hamburguesa-doble.png"},
-    {"id":4,"categoria":"Hamburguesas","nombre":"Combo Hamburguesa Doble","descripcion":"Doble + Papas + Gaseosa ¡Para los hambrones!","precio":3.75,"imagen":"assets/images/Gemini_Generated_Image_v1ty1hv1ty1hv1ty.png","promocion":true},
-    {"id":5,"categoria":"Hamburguesas","nombre":"Hamburguesa Especial","descripcion":"Ingredientes especiales y exclusivos","precio":3.50,"imagen":"assets/images/hamburguesa-especial.png"},
-    {"id":6,"categoria":"Hamburguesas","nombre":"Combo Hamburguesa Especial","descripcion":"Especial + Papas + Gaseosa ¡La mejor opción!","precio":4.25,"imagen":"assets/images/combo-especial.png","promocion":true},
-    {"id":7,"categoria":"Salchipapas","nombre":"Salchipapa","descripcion":"Papas fritas con salchicha tradicional","precio":2.00,"imagen":"assets/images/salchipapa.png"},
-    {"id":8,"categoria":"Salchipapas","nombre":"Choripapapa","descripcion":"Papas fritas con chorizo criollo","precio":2.25,"imagen":"assets/images/choripapapa.png"},
-    {"id":9,"categoria":"Bebidas","nombre":"Batido","descripcion":"Sabores: Guanábana, Naranjilla, Fresa, Mora, Tomate de árbol","precio":1.50,"imagen":"assets/images/batido-fresa.png"},
-    {"id":10,"categoria":"Bebidas","nombre":"Jugo Natural","descripcion":"Sabores: Guanábana, Naranjilla, Fresa, Mora, Tomate de árbol","precio":1.00,"imagen":"assets/images/batido-guanabana.png"},
-    {"id":11,"categoria":"Bebidas","nombre":"Café","descripcion":"Café tinto o con leche caliente","precio":1.00,"imagen":"assets/images/cafe.png"},
-    {"id":12,"categoria":"Empanadas","nombre":"Empanada Individual","descripcion":"Deliciosa empanada colombiana rellena","precio":0.80,"imagen":"assets/images/empanada-individual.png"},
-    {"id":13,"categoria":"Empanadas","nombre":"Combo Empanadas x5","descripcion":"5 empanadas a precio especial ¡Ahorra!","precio":3.50,"imagen":"assets/images/combo-empanadas-x5.png","promocion":true},
-    {"id":14,"categoria":"Arepas","nombre":"Arepa de Queso","descripcion":"Arepa rellena con queso derretido","precio":2.00,"imagen":"assets/images/arepa-queso.png"},
-    {"id":15,"categoria":"Arepas","nombre":"Arepa de Pollo","descripcion":"Arepa rellena de pollo desmechado","precio":2.50,"imagen":"assets/images/arepa-pollo.png"},
-    {"id":16,"categoria":"Arepas","nombre":"Arepa de Carne","descripcion":"Arepa con carne molida sazonada","precio":2.50,"imagen":"assets/images/arepa-carne.png"},
-    {"id":17,"categoria":"Arepas","nombre":"Arepa de Chorizo","descripcion":"Arepa con chorizo criollo","precio":2.50,"imagen":"assets/images/arepa-chorizo.png"},
-    {"id":18,"categoria":"Arepas","nombre":"Arepa de Chicharrón","descripcion":"Arepa con chicharrón crujiente","precio":3.00,"imagen":"assets/images/Gemini_Generated_Image_m4i3him4i3him4i3.png"},
-    {"id":19,"categoria":"Arepas","nombre":"Arepa Mixta","descripcion":"Elige dos ingredientes a tu gusto","precio":3.00,"imagen":"assets/images/arepa-mixta.png"}
+    {"id":1,"categoria":"Hamburguesas","nombre":"Hamburguesa Sencilla","descripcion":"Hamburguesa simple con queso y vegetales","precio":2.50,"imagen":"assets/images/hamburguesa-sencilla.jpg"},
+    {"id":2,"categoria":"Hamburguesas","nombre":"Combo Hamburguesa Sencilla","descripcion":"Hamburguesa + Papas + Gaseosa","precio":3.25,"imagen":"assets/images/Combo Hamburguesa Sencilla.jpg","promocion":true},
+    {"id":3,"categoria":"Hamburguesas","nombre":"Hamburguesa Doble","descripcion":"Doble carne con queso y vegetales","precio":3.00,"imagen":"assets/images/hamburguesa-doble.jpg"},
+    {"id":4,"categoria":"Hamburguesas","nombre":"Combo Hamburguesa Doble","descripcion":"Doble + Papas + Gaseosa","precio":3.75,"imagen":"assets/images/Combo Hamburguesa Doble.jpg","promocion":true},
+    {"id":5,"categoria":"Hamburguesas","nombre":"Hamburguesa Especial","descripcion":"Hamburguesa con ingredientes especiales","precio":3.50,"imagen":"assets/images/hamburguesa-especial.jpg"},
+    {"id":6,"categoria":"Hamburguesas","nombre":"Combo Hamburguesa Especial","descripcion":"Especial + Papas + Gaseosa","precio":4.25,"imagen":"assets/images/Combo Hamburguesa Especial.jpg","promocion":true},
+
+    {"id":7,"categoria":"Salchipapas","nombre":"Salchipapa","descripcion":"Papas fritas con salchicha","precio":2.00,"imagen":"assets/images/salchipapa.jpg"},
+    {"id":8,"categoria":"Salchipapas","nombre":"Choripapapa","descripcion":"Papas fritas con chorizo","precio":2.25,"imagen":"assets/images/choripapapa.jpg"},
+
+    {"id":9,"categoria":"Bebidas","nombre":"Batido de Fresa","descripcion":"Batido cremoso de fresa","precio":1.50,"imagen":"assets/images/batido-fresa.jpg"},
+    {"id":10,"categoria":"Bebidas","nombre":"Batido de Guanábana","descripcion":"Batido cremoso de guanábana","precio":1.50,"imagen":"assets/images/batido-guanabana.jpg"},
+    {"id":11,"categoria":"Bebidas","nombre":"Batido de Mora","descripcion":"Batido cremoso de mora","precio":1.50,"imagen":"assets/images/batido-mora.jpg"},
+    {"id":12,"categoria":"Bebidas","nombre":"Batido de Naranjilla","descripcion":"Batido cremoso de naranjilla","precio":1.50,"imagen":"assets/images/batido-naranjilla.jpg"},
+
+    {"id":13,"categoria":"Arepas","nombre":"Arepa de Queso","descripcion":"Arepa rellena con queso derretido","precio":2.00,"imagen":"assets/images/arepa-queso.jpg"},
+    {"id":14,"categoria":"Arepas","nombre":"Arepa de Pollo","descripcion":"Arepa rellena de pollo desmechado","precio":2.50,"imagen":"assets/images/arepa-pollo.jpg"},
+    {"id":15,"categoria":"Arepas","nombre":"Arepa de Carne","descripcion":"Arepa con carne molida sazonada","precio":2.50,"imagen":"assets/images/arepa-carne.jpg"},
+    {"id":16,"categoria":"Arepas","nombre":"Arepa de Chorizo","descripcion":"Arepa con chorizo a la plancha","precio":2.50,"imagen":"assets/images/arepa-chorizo.jpg"},
+    {"id":17,"categoria":"Arepas","nombre":"Arepa de Chicharrón","descripcion":"Arepa con chicharrón crujiente","precio":3.00,"imagen":"assets/images/arepa-chicharron.jpg"},
+    {"id":18,"categoria":"Arepas","nombre":"Arepa Mixta","descripcion":"Arepa con 2 ingredientes a elegir","precio":3.00,"imagen":"assets/images/arepa-mixta.jpg"},
+
+    {"id":19,"categoria":"Empanadas","nombre":"Empanada Individual","descripcion":"Deliciosa empanada colombiana rellena","precio":0.80,"imagen":"assets/images/empanada-individual.jpg"},
+    {"id":20,"categoria":"Empanadas","nombre":"Combo Empanadas x5","descripcion":"5 empanadas a precio especial ¡Ahorra!","precio":3.50,"imagen":"assets/images/combo-empanadas-x5.jpg","promocion":true},
+
+    {"id":21,"categoria":"Bebidas","nombre":"Jugo de Fresa","descripcion":"Jugo natural de fresa","precio":1.00,"imagen":"assets/images/jugo-fresa.jpg"},
+    {"id":22,"categoria":"Bebidas","nombre":"Jugo de Guanábana","descripcion":"Jugo natural de guanábana","precio":1.00,"imagen":"assets/images/jugo-guanabana.jpg"},
+    {"id":23,"categoria":"Bebidas","nombre":"Jugo de Mora","descripcion":"Jugo natural de mora","precio":1.00,"imagen":"assets/images/jugo-mora.jpg"},
+    {"id":24,"categoria":"Bebidas","nombre":"Jugo de Naranjilla","descripcion":"Jugo natural de naranjilla","precio":1.00,"imagen":"assets/images/jugo-naranjilla.jpg"},
+    {"id":25,"categoria":"Bebidas","nombre":"Jugo de Tomate de Árbol","descripcion":"Jugo natural de tomate de árbol","precio":1.00,"imagen":"assets/images/jugo-tomate.jpg"},
+
+    {"id":26,"categoria":"Bebidas","nombre":"Café","descripcion":"Café caliente recién hecho","precio":1.00,"imagen":"assets/images/cafe.jpg"}
 ]

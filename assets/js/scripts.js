@@ -1,4 +1,6 @@
-﻿$(document).ready(function() {
+let html5QrCode = null;
+
+$(document).ready(function() {
     let carrito = [];
 
     $(document).on('click', '.agregar-carrito', function() {
@@ -64,6 +66,7 @@
 
     $('#btn-finalizar-pedido').click(function() {
         if (carrito.length === 0) return;
+        detenerScanner();
         let resumen = '', total = 0;
         carrito.forEach(item => {
             const sub = item.precio * item.cantidad;
@@ -73,16 +76,16 @@
         resumen += `\nTOTAL: $ ${total.toFixed(2)}`;
         const modalBody = $('#modal-pago-body');
         modalBody.html(`
-            <h6>Resumen de tu pedido:</h6>
-            <pre class="bg-light p-3 rounded" style="border-left: 4px solid #FFD700;">${resumen}</pre>
-            <hr>
-            <h6>Selecciona método de pago:</h6>
+            <h6 style="color: #FFD700; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">Resumen de tu pedido:</h6>
+            <div style="background: linear-gradient(135deg, #2a2a2a, #1a1a1a); border-left: 4px solid #FFD700; padding: 15px; border-radius: 10px; font-family: monospace; font-size: 0.95rem; line-height: 1.8; white-space: pre-wrap; color: #FFD700; font-weight: 600; text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);">${resumen}</div>
+            <hr style="border-color: rgba(255, 152, 0, 0.3); margin: 20px 0;">
+            <h6 style="color: #FFD700; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">Selecciona método de pago:</h6>
             <div class="d-flex gap-3 mb-3">
-                <button class="btn btn-outline-primary w-50 p-3 metodo-pago" data-metodo="efectivo">
-                    <i class="fas fa-money-bill fa-2x d-block"></i> Efectivo
+                <button class="btn btn-outline-primary w-50 p-3 metodo-pago" data-metodo="efectivo" style="border-color: #FFC107; color: #FFC107;">
+                    <i class="fas fa-money-bill fa-2x d-block mb-2"></i> <strong>Efectivo</strong>
                 </button>
-                <button class="btn btn-outline-success w-50 p-3 metodo-pago" data-metodo="transferencia">
-                    <i class="fas fa-university fa-2x d-block"></i> Transferencia
+                <button class="btn btn-outline-success w-50 p-3 metodo-pago" data-metodo="transferencia" style="border-color: #28a745; color: #28a745;">
+                    <i class="fas fa-university fa-2x d-block mb-2"></i> <strong>Transferencia</strong>
                 </button>
             </div>
             <div id="detalle-pago" class="mt-3"></div>
@@ -90,37 +93,121 @@
         $('#pagoModal').modal('show');
     });
 
+    $('#pagoModal').on('hidden.bs.modal', function () {
+        detenerScanner();
+    });
+
     $(document).on('click', '.metodo-pago', function() {
         const metodo = $(this).data('metodo');
         const detalleDiv = $('#detalle-pago');
+        detenerScanner();
         if (metodo === 'efectivo') {
             detalleDiv.html(`
-                <div class="alert alert-info"><i class="fas fa-info-circle"></i> Pagas en efectivo al recibir tu pedido.</div>
-                <button class="btn btn-success w-100" id="confirmar-pedido-efectivo"><i class="fab fa-whatsapp"></i> Confirmar Pedido (Efectivo)</button>
+                <div class="alert alert-info" style="background: rgba(23, 162, 184, 0.15); border-color: rgba(23, 162, 184, 0.5); color: #fff;"><i class="fas fa-info-circle"></i> Pagas en efectivo al recibir tu pedido.</div>
+                <button class="btn btn-success w-100" id="confirmar-pedido-efectivo" style="background: linear-gradient(135deg, #28a745, #1e7e34); border: none; padding: 15px; font-size: 1.05rem; font-weight: bold;"><i class="fab fa-whatsapp"></i> Confirmar Pedido (Efectivo)</button>
             `);
         } else {
             detalleDiv.html(`
-                <div class="alert alert-secondary">
-                    <h6>Datos para Transferencia:</h6>
-                    <p class="mb-1"><strong>Banco:</strong> <?php echo BANCO_NOMBRE; ?></p>
-                    <p class="mb-1"><strong>Tipo:</strong> <?php echo BANCO_TIPO_CUENTA; ?></p>
-                    <p class="mb-1"><strong>N° Cuenta:</strong> <?php echo BANCO_NUMERO; ?></p>
-                    <p class="mb-1"><strong>Titular:</strong> <?php echo BANCO_TITULAR; ?></p>
-                    <p class="mb-1"><strong>Cédula:</strong> <?php echo BANCO_CEDULA; ?></p>
-                    <div class="text-center mt-2">
-                        <img src="<?php echo BANCO_QR_IMG; ?>" alt="QR Banco" style="max-width:150px;" onerror="this.style.display='none'">
-                        <p class="small text-muted">Escanea el QR para transferir.</p>
+                <div style="background: linear-gradient(145deg, rgba(45, 45, 45, 0.95), rgba(25, 25, 25, 0.98)); border: 2px solid rgba(255, 193, 7, 0.4); border-radius: 16px; padding: 20px; margin-bottom: 20px;">
+                    <h6 style="color: #FFD700; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">📋 Datos para Transferencia:</h6>
+                    <p style="margin-bottom: 10px; color: #fff;"><strong style="color: #FFD700;">🏦 Banco:</strong> ${BANCO_NOMBRE}</p>
+                    <p style="margin-bottom: 10px; color: #fff;"><strong style="color: #FFD700;">💳 Tipo:</strong> ${BANCO_TIPO_CUENTA}</p>
+                    <p style="margin-bottom: 10px; color: #fff;"><strong style="color: #FFD700;">🔢 N° Cuenta:</strong> ${BANCO_NUMERO}</p>
+                    <p style="margin-bottom: 10px; color: #fff;"><strong style="color: #FFD700;">👤 Titular:</strong> ${BANCO_TITULAR}</p>
+                    <p style="margin-bottom: 15px; color: #fff;"><strong style="color: #FFD700;">🆔 Cédula:</strong> ${BANCO_CEDULA}</p>
+                    <div class="text-center mt-3" style="padding: 15px; background: rgba(255, 255, 255, 0.95); border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);">
+                        <img src="${BANCO_QR_IMG}?v=${Date.now()}" alt="QR Banco" style="max-width: 280px; width: 100%; border-radius: 8px;">
+                        <p style="margin-top: 10px; color: #1a1a1a; font-weight: 700; font-size: 0.95rem;">📱 Escanea el QR para transferir.</p>
                     </div>
+                    <button class="btn-escanear-qr" id="btn-iniciar-scanner">
+                        <i class="fas fa-qrcode"></i> 📷 Escanear Código QR
+                    </button>
+                    <div id="scanner-wrapper" style="display: none; margin-top: 15px;"></div>
                 </div>
-                <button class="btn btn-success w-100" id="confirmar-pedido-transferencia"><i class="fab fa-whatsapp"></i> Confirmar Pedido (Transferencia)</button>
+                <button class="btn btn-success w-100" id="confirmar-pedido-transferencia" style="background: linear-gradient(135deg, #28a745, #1e7e34); border: none; padding: 15px; font-size: 1.05rem; font-weight: bold;"><i class="fab fa-whatsapp"></i> Confirmar Pedido (Transferencia)</button>
             `);
         }
     });
+
+    $(document).on('click', '#btn-iniciar-scanner', function() {
+        if (html5QrCode) {
+            detenerScanner();
+        }
+        const wrapper = $('#scanner-wrapper');
+        wrapper.show();
+        wrapper.html(`
+            <div class="qr-scanner-container">
+                <h6><i class="fas fa-camera"></i> Escaneando QR...</h6>
+                <div id="qr-reader"></div>
+                <button class="btn-cerrar-scanner" id="btn-cerrar-scanner">
+                    <i class="fas fa-times"></i> Cerrar Escáner
+                </button>
+                <div id="qr-resultado"></div>
+            </div>
+        `);
+        iniciarScanner();
+    });
+
+    $(document).on('click', '#btn-cerrar-scanner', function() {
+        detenerScanner();
+        $('#scanner-wrapper').hide();
+    });
+
+    function iniciarScanner() {
+        html5QrCode = new Html5Qrcode("qr-reader");
+        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+        html5QrCode.start(
+            { facingMode: "environment" },
+            config,
+            onScanSuccess,
+            onScanFailure
+        ).catch((err) => {
+            console.error("Error al iniciar scanner:", err);
+            $('#qr-resultado').html(`
+                <div class="qr-resultado" style="background: rgba(211, 47, 47, 0.15); border-color: rgba(211, 47, 47, 0.5);">
+                    <i class="fas fa-exclamation-triangle"></i> No se pudo acceder a la cámara. 
+                    Por favor permite el acceso o escanea el código QR directamente con la app de tu banco.
+                </div>
+            `);
+        });
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+        detenerScanner();
+        let html = `<div class="qr-resultado"><i class="fas fa-check-circle"></i> <strong>¡QR Detectado!</strong><br><br>`;
+        if (decodedText.startsWith('http')) {
+            html += `<a href="${decodedText}" target="_blank">${decodedText}</a>
+                <br><br><a href="${decodedText}" target="_blank" class="btn btn-success btn-sm" style="border-radius: 50px; padding: 8px 20px;">
+                    <i class="fas fa-external-link-alt"></i> Abrir Enlace
+                </a>`;
+        } else {
+            html += `<strong>Contenido:</strong> ${decodedText}`;
+        }
+        html += `</div>`;
+        $('#qr-resultado').html(html);
+    }
+
+    function onScanFailure(error) {
+        // No mostramos errores constantemente
+    }
+
+    function detenerScanner() {
+        if (html5QrCode != null) {
+            html5QrCode.stop().then((ignore) => {
+                html5QrCode.clear();
+                html5QrCode = null;
+            }).catch((err) => {
+                console.error("Error al detener scanner:", err);
+                html5QrCode = null;
+            });
+        }
+    }
 
     $(document).on('click', '#confirmar-pedido-efectivo, #confirmar-pedido-transferencia', function() {
         const metodo = $(this).text().includes('Transferencia') ? 'Transferencia Bancaria' : 'Efectivo';
         enviarPedidoWhatsApp(metodo);
         $('#pagoModal').modal('hide');
+        detenerScanner();
         setTimeout(() => { $('#calificacionModal').modal('show'); }, 1500);
         carrito = [];
         actualizarCarrito();

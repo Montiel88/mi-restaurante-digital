@@ -31,7 +31,7 @@ $productos = array_filter($menuItems, function($item) {
 <div class="container">
     <div class="hero-central">
         <div class="hero-box">
-            <div class="brand-name">La Hueca del Sabor</div>
+            <div class="brand-name neon-text">QÉHVÉ</div>
             <div class="brand-sub">¡Ven y Disfruta!</div>
             <div class="brand-divider"></div>
 
@@ -170,6 +170,12 @@ $productos = array_filter($menuItems, function($item) {
 <script>
     const telefonoNegocio = "<?php echo TELEFONO_WHATSAPP; ?>";
     const nombreNegocio = "<?php echo NEGOCIO_NOMBRE; ?>";
+    const BANCO_NOMBRE = "<?php echo BANCO_NOMBRE; ?>";
+    const BANCO_TIPO_CUENTA = "<?php echo BANCO_TIPO_CUENTA; ?>";
+    const BANCO_NUMERO = "<?php echo BANCO_NUMERO; ?>";
+    const BANCO_TITULAR = "<?php echo BANCO_TITULAR; ?>";
+    const BANCO_CEDULA = "<?php echo BANCO_CEDULA; ?>";
+    const BANCO_QR_IMG = "<?php echo BANCO_QR_IMG; ?>";
 </script>
 
 <?php include 'includes/footer.php'; ?>
