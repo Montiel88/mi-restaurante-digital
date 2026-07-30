@@ -119,7 +119,7 @@ $productos = array_filter($menuItems, function($item) {
 </section>
 
 <!-- CARRITO Y MODALES (igual que antes) -->
-<button class="btn btn-dark btn-lg position-fixed bottom-0 end-0 m-3 rounded-circle shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas" style="width:65px; height:65px; z-index:1050; background: #CC0000; border: 2px solid #FFD700;">
+<button class="btn btn-dark btn-lg position-fixed bottom-0 end-0 m-3 rounded-circle shadow floating-cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas" style="width:65px; height:65px; z-index:1050; background: #CC0000; border: 2px solid #FFD700;">
     <i class="fas fa-shopping-cart fa-2x text-white"></i>
     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark" id="carrito-count">0</span>
 </button>

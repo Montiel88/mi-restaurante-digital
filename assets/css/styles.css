@@ -505,28 +505,21 @@ body::before {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #D32F2F, #B71C1C);
-    padding: 20px;
-    border-radius: 50%;
-    width: 95px;
-    height: 95px;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    width: auto;
+    height: auto;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 25px rgba(211, 47, 47, 0.45);
-    font-size: 2.8rem;
+    box-shadow: none;
+    font-size: 2.2rem;
 }
-.mapa-container .mapa-icono svg {
-    width: 48px;
-    height: 48px;
-    fill: #FFC107;
-}
+.mapa-container .mapa-icono i { color: #1E88E5; }
 .mapa-container .mapa-icono:hover {
-    transform: scale(1.18) rotate(5deg);
-    background: linear-gradient(135deg, #FFC107, #FF9800);
-    box-shadow: 0 15px 40px rgba(255, 152, 0, 0.5);
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 10px rgba(30, 136, 229, 0.35));
 }
-.mapa-container .mapa-icono:hover svg {
-    fill: #D32F2F;
-}
+.mapa-container .mapa-icono:hover i { color: #1E88E5; }
 .mapa-container .mapa-iframe {
     display: none;
     margin-top: 20px;
@@ -614,14 +607,22 @@ body::before {
     box-shadow: 0 12px 45px rgba(37, 211, 102, 0.6);
 }
 
+.floating-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    line-height: 1;
+}
+
 .social-icons .btn { 
     border-radius: 50% !important; 
-    width: 55px; 
-    height: 55px; 
+    width: 40px !important; 
+    height: 40px !important; 
     display: inline-flex; 
     align-items: center; 
     justify-content: center; 
-    font-size: 1.4rem; 
+    font-size: 1.05rem; 
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
     border: 2px solid rgba(255, 193, 7, 0.3);
     background: rgba(255, 193, 7, 0.05);
@@ -641,6 +642,48 @@ body::before {
     .producto-item .card .card-img-top { height: 170px; }
     .promociones-section .card-img-top { height: 170px; }
     .neon-text { font-size: 1.4rem; letter-spacing: 2px; }
+}
+
+@media (max-width: 576px) {
+    .producto-item .card .card-img-top { height: 145px; }
+    .producto-item .card-body { padding: 14px; }
+    .producto-item .card-title { font-size: 1.05rem; letter-spacing: 1px; line-height: 1.15; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: calc(1.15em * 2); }
+    .producto-item .card-text { font-size: 0.85rem; line-height: 1.35; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+    .price-tag { font-size: 0.95rem !important; padding: 6px 14px !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; }
+    .producto-item .price-tag { 
+        font-size: 0.95rem !important; 
+        padding: 6px 14px !important; 
+        white-space: nowrap !important;
+        width: auto !important;
+        height: auto !important;
+        border-radius: 50px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+    }
+    .producto-item .btn-add-kfc { 
+        padding: 8px 12px !important; 
+        font-size: 0.85rem !important;
+        width: 44px;
+        height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+    }
+    .producto-item .btn-add-kfc i { font-size: 1.05rem !important; }
+    .floating-cart-btn { width: 52px !important; height: 52px !important; }
+    .floating-cart-btn i { font-size: 1.25rem !important; }
+    button[data-bs-target="#carritoOffcanvas"] { width: 52px !important; height: 52px !important; margin: 12px !important; }
+    button[data-bs-target="#carritoOffcanvas"] i { font-size: 1.25rem !important; }
+    #carrito-count { font-size: 0.7rem; }
+    .item-carrito { padding: 12px; }
+    .item-carrito .cantidad-control button { width: 32px; height: 32px; }
+}
+
+@media (max-width: 380px) {
+    .producto-item .card-title { font-size: 0.98rem; }
+    .price-tag { font-size: 0.9rem; padding: 5px 12px; }
+    .btn-add-kfc { padding: 7px 10px; }
 }
 
 /* ===== QR SCANNER STYLES ===== */

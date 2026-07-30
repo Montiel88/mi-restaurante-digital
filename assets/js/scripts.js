@@ -79,6 +79,35 @@ $(document).ready(function() {
             <h6 style="color: #FFD700; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">Resumen de tu pedido:</h6>
             <div style="background: linear-gradient(135deg, #2a2a2a, #1a1a1a); border-left: 4px solid #FFD700; padding: 15px; border-radius: 10px; font-family: monospace; font-size: 0.95rem; line-height: 1.8; white-space: pre-wrap; color: #FFD700; font-weight: 600; text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);">${resumen}</div>
             <hr style="border-color: rgba(255, 152, 0, 0.3); margin: 20px 0;">
+            <h6 style="color: #FFD700; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">Datos para tu pedido a domicilio:</h6>
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 193, 7, 0.25); border-radius: 14px; padding: 15px; margin-bottom: 20px;">
+                <div class="row g-2">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" style="color:#e0e0e0; font-weight:600; font-size:0.9rem;">Nombre (opcional)</label>
+                        <input type="text" id="cliente-nombre" class="form-control" placeholder="Tu nombre" style="background:#1f1f1f; color:#fff; border:1px solid rgba(255,193,7,0.25);">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" style="color:#e0e0e0; font-weight:600; font-size:0.9rem;">Teléfono (opcional)</label>
+                        <input type="tel" id="cliente-telefono" class="form-control" placeholder="Tu número" style="background:#1f1f1f; color:#fff; border:1px solid rgba(255,193,7,0.25);">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" style="color:#e0e0e0; font-weight:600; font-size:0.9rem;">Dirección / Referencia (recomendado)</label>
+                        <input type="text" id="cliente-direccion" class="form-control" placeholder="Sector, calle, número, referencia, etc." style="background:#1f1f1f; color:#fff; border:1px solid rgba(255,193,7,0.25);">
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="cliente-compartir-ubicacion">
+                                <label class="form-check-label" for="cliente-compartir-ubicacion" style="color:#e0e0e0; font-size:0.9rem;">Adjuntar mi ubicación (GPS)</label>
+                            </div>
+                            <button type="button" class="btn btn-outline-info btn-sm" id="btn-obtener-ubicacion" style="border-radius:50px;">Obtener ubicación</button>
+                        </div>
+                        <div id="cliente-ubicacion-info" style="margin-top:10px; font-size:0.85rem; color:#9ecbff; display:none;"></div>
+                        <input type="hidden" id="cliente-ubicacion-link" value="">
+                    </div>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255, 152, 0, 0.3); margin: 20px 0;">
             <h6 style="color: #FFD700; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">Selecciona método de pago:</h6>
             <div class="d-flex gap-3 mb-3">
                 <button class="btn btn-outline-primary w-50 p-3 metodo-pago" data-metodo="efectivo" style="border-color: #FFC107; color: #FFC107;">
@@ -91,6 +120,29 @@ $(document).ready(function() {
             <div id="detalle-pago" class="mt-3"></div>
         `);
         $('#pagoModal').modal('show');
+    });
+
+    $(document).on('click', '#btn-obtener-ubicacion', function() {
+        const info = $('#cliente-ubicacion-info');
+        info.show().text('Obteniendo ubicación...');
+        if (!navigator.geolocation) {
+            info.text('Tu navegador no permite obtener ubicación.');
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                const lat = pos.coords.latitude;
+                const lng = pos.coords.longitude;
+                const link = `https://maps.google.com/?q=${lat},${lng}`;
+                $('#cliente-ubicacion-link').val(link);
+                $('#cliente-compartir-ubicacion').prop('checked', true);
+                info.html(`Ubicación lista: <a href="${link}" target="_blank" style="color:#9ecbff;">Ver en Google Maps</a>`);
+            },
+            () => {
+                info.text('No se pudo obtener la ubicación. Puedes escribir tu dirección.');
+            },
+            { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+        );
     });
 
     $('#pagoModal').on('hidden.bs.modal', function () {
@@ -215,16 +267,29 @@ $(document).ready(function() {
 
     function enviarPedidoWhatsApp(metodoPago) {
         if (carrito.length === 0) return;
-        let mensaje = `Hola, soy de la mesa (especifica tu mesa). Quiero hacer el siguiente pedido:\n\n`;
+        const clienteNombre = ($('#cliente-nombre').val() || '').trim();
+        const clienteTelefono = ($('#cliente-telefono').val() || '').trim();
+        const clienteDireccion = ($('#cliente-direccion').val() || '').trim();
+        const compartirUbicacion = $('#cliente-compartir-ubicacion').is(':checked');
+        const clienteUbicacionLink = ($('#cliente-ubicacion-link').val() || '').trim();
+
+        let mensaje = `Hola, me ayudas con este pedido a domicilio en ${nombreNegocio}?\n\n`;
+        if (clienteNombre) mensaje += `Nombre: ${clienteNombre}\n`;
+        if (clienteTelefono) mensaje += `Teléfono: ${clienteTelefono}\n`;
+        if (clienteDireccion) mensaje += `Dirección/Referencia: ${clienteDireccion}\n`;
+        if (compartirUbicacion && clienteUbicacionLink) mensaje += `Ubicación (GPS): ${clienteUbicacionLink}\n`;
+        if (clienteNombre || clienteTelefono || clienteDireccion || (compartirUbicacion && clienteUbicacionLink)) mensaje += `\n`;
+
+        mensaje += `Detalle del pedido:\n`;
         let total = 0;
         carrito.forEach(item => {
             const sub = item.precio * item.cantidad;
             total += sub;
-            mensaje += `- ${item.cantidad}x ${item.nombre} = $ ${sub.toFixed(2)}\n`;
+            mensaje += `• ${item.cantidad}x ${item.nombre} = $ ${sub.toFixed(2)}\n`;
         });
-        mensaje += `\n*Total a pagar:* $ ${total.toFixed(2)}`;
-        mensaje += `\n*Método de pago:* ${metodoPago}`;
-        mensaje += `\n\n¡Gracias, espero mi pedido!`;
+        mensaje += `\nTotal a pagar: $ ${total.toFixed(2)}`;
+        mensaje += `\nMétodo de pago: ${metodoPago}`;
+        mensaje += `\n\nGracias.`;
         const url = `https://wa.me/${telefonoNegocio}?text=${encodeURIComponent(mensaje)}`;
         window.open(url, '_blank');
     }
